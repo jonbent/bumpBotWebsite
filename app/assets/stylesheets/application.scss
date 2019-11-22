@@ -1,0 +1,18 @@
+// Custom bootstrap variables must be set or imported *before* bootstrap.
+@import "bootstrap";
+@import "rails_bootstrap_forms";
+
+.nav-name {
+    font-size: 1rem
+}
+.nav-discriminator {
+    font-size: 0.5rem
+}
+.size-30 {
+    height: 30px;
+    width: 30px;
+}
+
+a[disabled] {
+    pointer-events: none;
+}

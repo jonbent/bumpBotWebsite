@@ -1,0 +1,27 @@
+<div class='row'>
+    <div class='col-12'>
+        <h3>Your Admined Discords</h3>
+        
+    </div>
+    
+
+    <% @guilds.each do |k, guild| %>
+        <div class='col-xl-3 col-lg-4 col-md-6 col-sm-12'>
+            <div class="card" style="width: 18rem;">
+                <% if !guild["icon"] %>
+                    <img src="<%= asset_path('1510200817001.png') %>" class="card-img-top" alt="...">
+                <% else %>
+                    <img src="https://cdn.discordapp.com/icons/<%= guild['id'] + '/' + guild['icon']%>?size=220x220" class="card-img-top" alt="...">
+                <% end %>
+                <div class="card-body">
+                    <h5 class="card-title"><%= guild["name"] %></h5>
+                    <% if !guild["in_database"] %>
+                        <a href="https://discordapp.com/oauth2/authorize?client_id=<%=ENV['CLIENT_ID']%>&scope=bot%20identify%20email%20connections%20guilds&guild_id=<%=guild['id']%>&permissions=2134207679&response_type=code&redirect_uri=http://localhost:3000/create_guild" class="btn btn-primary">Add to Server</a>
+                    <% else %>
+                        <a disabled class="btn btn-secondary">Already in Server</a>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+    <% end   %>
+</div>

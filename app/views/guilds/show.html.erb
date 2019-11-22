@@ -1,0 +1,31 @@
+<div class='row'>
+    <div class='col-12'>
+        
+
+        <div class="media">
+            <img src="<%=@guild_image%>" class="align-self-start mr-3 rounded-circle" alt="...">
+            <div class="media-body">
+                <h3 class="mt-0"><%=@guild["name"]%></h3>
+                <p>Welcome to your Server Management Page. From here you can create custom commands that will talk directly to bumpBot, in your server.</p>
+                <p>You may also want to enable some of the given commands.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-12">
+        <form class="form-inline">
+            <div class="form-group col-4">
+                <label for="user_input" class="sr-only">User Command</label>
+                <input class="form-control" id="user_input" placeholder="User Command">
+            </div>
+            <div class="form-group col-4">
+                <label for="expected_functionality" class="sr-only">Expected functionality</label>
+                <input class="form-control" id="expected_functionality" class="sr-only" placeholder="Expected functionality">
+            </div>
+            <button type="submit" class="btn btn-primary mb-2">Add command</button>
+        </form>
+    </div>
+</div>
+

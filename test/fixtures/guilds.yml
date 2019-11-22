@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  discord_id: MyString
+  name,: MyString
+  user: 
+  permissions: MyString
+
+two:
+  discord_id: MyString
+  name,: MyString
+  user: 
+  permissions: MyString

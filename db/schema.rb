@@ -10,29 +10,52 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_22_031945) do
+ActiveRecord::Schema.define(version: 2019_11_25_062604) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "command_params", force: :cascade do |t|
+    t.string "param_key", null: false
+    t.string "param_value", null: false
+    t.boolean "optional", default: true, null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "default_command_id"
+    t.index ["default_command_id"], name: "index_command_params_on_default_command_id"
+  end
+
+  create_table "default_commands", force: :cascade do |t|
+    t.string "class_name", null: false
+    t.string "method_name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "description"
+    t.string "method_type", null: false
+    t.string "return_type"
+  end
+
+  create_table "guild_commands", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.boolean "enabled", default: true
+    t.bigint "guild_id"
+    t.bigint "default_command_id"
+    t.string "command"
+    t.index ["command"], name: "index_guild_commands_on_command"
+    t.index ["default_command_id", "guild_id"], name: "index_guild_commands_on_default_command_id_and_guild_id", unique: true
+    t.index ["default_command_id"], name: "index_guild_commands_on_default_command_id"
+    t.index ["guild_id"], name: "index_guild_commands_on_guild_id"
+  end
+
   create_table "guilds", force: :cascade do |t|
-    t.string "guild_id", null: false
+    t.bigint "guild_id", null: false
     t.string "name"
     t.bigint "user_id", null: false
     t.string "permissions"
+    t.string "prefix", default: "!", null: false
     t.index ["guild_id"], name: "index_guilds_on_guild_id"
     t.index ["user_id"], name: "index_guilds_on_user_id"
-  end
-
-  create_table "user_commands", force: :cascade do |t|
-    t.bigint "user_id", null: false
-    t.string "class", null: false
-    t.string "method", null: false
-    t.string "prefix", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["method"], name: "index_user_commands_on_method"
-    t.index ["user_id"], name: "index_user_commands_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -51,6 +74,7 @@ ActiveRecord::Schema.define(version: 2019_11_22_031945) do
     t.index ["username", "discriminator"], name: "index_users_on_username_and_discriminator", unique: true
   end
 
+  add_foreign_key "command_params", "default_commands"
+  add_foreign_key "guild_commands", "guilds"
   add_foreign_key "guilds", "users"
-  add_foreign_key "user_commands", "users"
 end

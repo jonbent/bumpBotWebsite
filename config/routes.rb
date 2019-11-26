@@ -9,5 +9,7 @@ Rails.application.routes.draw do
   get 'create_guild', to: 'guilds#create'
 
   resources :users
-  resources :guilds, only: [:show]
+  resources :guilds, only: [:show, :create] do
+    resources :guild_commands, only: [:create]
+  end
 end

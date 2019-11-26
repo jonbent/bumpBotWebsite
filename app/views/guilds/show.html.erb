@@ -1,7 +1,5 @@
 <div class='row'>
     <div class='col-12'>
-        
-
         <div class="media">
             <img src="<%=@guild_image%>" class="align-self-start mr-3 rounded-circle" alt="...">
             <div class="media-body">
@@ -15,17 +13,62 @@
 
 <div class="row">
     <div class="col-12">
-        <form class="form-inline">
-            <div class="form-group col-4">
-                <label for="user_input" class="sr-only">User Command</label>
-                <input class="form-control" id="user_input" placeholder="User Command">
+        <%= bootstrap_form_with model: @guild_command, url: guild_guild_commands_path(@real_guild) do |f| %>
+        <div class="form-row">
+            <div class="col-6">
+                <%= f.text_field :command, prepend: @real_guild.prefix %>
             </div>
-            <div class="form-group col-4">
-                <label for="expected_functionality" class="sr-only">Expected functionality</label>
-                <input class="form-control" id="expected_functionality" class="sr-only" placeholder="Expected functionality">
+            <div class="col-6">
+                <%= f.select :default_command_id, @select_options, disabled: "", selected: "" %>
             </div>
-            <button type="submit" class="btn btn-primary mb-2">Add command</button>
-        </form>
+        </div>
+        <div class="form-row" hidden>
+            <div class="col-12">
+                <%= render 'default_command_description', command: @fake_command %>
+            </div>
+        </div>
+        <br>
+        <div class="form-row">
+            <div class="col-12">
+                <%= f.submit "Add Command", class: "btn btn-primary btn-block" %>
+            </div>
+        </div>
+        <% end %>
     </div>
 </div>
+<br>
+<% if !@guild_commands.empty? %>
+    <div class="row">
+        <div class="col-12">
+            <table class="table table-bordered table-dark">
+                <thead>
+                    <tr>
+                        <th scope="col"></th>
+                        <th scope="col">Command</th>
+                        <th scope="col">Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% @guild_commands.each do |command| %>
+                        <tr>
+                            <th></th>
+                            <td><%= @real_guild.prefix + 
+                                        command.command + (if !command.command_params.empty? 
+                                            " {" + 
+                                            command.command_params
+                                                .map {|param| "#{param.param_key}:#{param.param_value}"}.join("}, {") + "}" 
+                                        else
+                                            ""
+                                        end
+                                    )
+                                        
+                                %></td>
+                            <td><%= command.default_command.description %></td>
+                        </tr>
+                    <% end %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+<% end %>
 

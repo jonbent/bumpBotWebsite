@@ -17,3 +17,24 @@
 //= require jquery3
 //= require popper
 //= require bootstrap
+$(document).on('turbolinks:load', function () {
+    $(document).on('change', '#guild_command_default_command_id', (e) => {
+        var that = $(this);
+        $.ajax({
+            method: "GET",
+            url: window.location,
+            data: {
+                default_command_id: that[0].activeElement.value
+            }
+        }).done(function(res){
+            console.log(res)
+            if (res.description){
+                $('#default_command_description').closest(".form-row").removeAttr("hidden")
+                $('#default_command_description').val(res.description)
+            } else {
+                $('#default_command_description').closest(".form-row").attr("hidden", true)
+
+            }
+        })
+    })
+})

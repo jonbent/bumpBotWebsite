@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  param_key: MyString
+  param_value: MyString
+  user_command: one
+
+two:
+  param_key: MyString
+  param_value: MyString
+  user_command: two
